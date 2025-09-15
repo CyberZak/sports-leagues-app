@@ -54,7 +54,14 @@ export default function LeagueDetailPage() {
     )
   }
   if (error) return <div className="py-12 text-center text-red-600">{error}</div>
-  if (!season) return <div className="py-12 text-center">No data</div>
+  if (!season) return (
+    <div className="space-y-4 text-center">
+      <div>No data</div>
+      <button className="rounded-md border px-3 py-1 text-sm hover:bg-gray-50" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+    </div>
+  )
 
   return (
     <div className="space-y-4">

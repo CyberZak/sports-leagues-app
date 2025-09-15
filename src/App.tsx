@@ -5,7 +5,8 @@ import LeagueDetailPage from './pages/LeagueDetailPage'
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 text-gray-900 dark:from-gray-900 dark:to-gray-950 dark:text-gray-100">
-      <header className="sticky top-0 z-10 border-b border-gray-200/60 bg-white/70 backdrop-blur-md dark:border-gray-700/50 dark:bg-gray-900/60">
+      <a href="/" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:rounded-md focus:bg-blue-600 focus:px-3 focus:py-2 focus:text-white">Skip to content</a>
+      <header className="sticky top-0 z-10 border-b border-gray-200/60 bg-white/70 backdrop-blur-md dark:border-gray-700/50 dark:bg-gray-900/60" role="banner">
         <nav className="container mx-auto flex items-center justify-between p-4">
           <Link to="/" className="text-lg font-semibold tracking-tight">
             <span className="mr-2">🏟️</span> Sports Leagues
@@ -18,7 +19,7 @@ function App() {
           </div>
         </nav>
       </header>
-      <main className="container mx-auto p-6">
+      <main id="main" className="container mx-auto p-6" role="main">
         <Routes>
           <Route path="/" element={<LeaguesPage />} />
           <Route path="/league/:id" element={<LeagueDetailPage />} />

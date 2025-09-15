@@ -21,7 +21,11 @@ export default function LeaguesPage() {
   const [sport, setSport] = useState<string>('')
 
   useEffect(() => {
+    const controller = new AbortController()
+    let isFetching = false
     async function load() {
+      if (isFetching) return
+      isFetching = true
       setLoading(true)
       setError('')
       try {
@@ -38,9 +42,11 @@ export default function LeaguesPage() {
         setError(e instanceof Error ? e.message : 'Failed to load leagues')
       } finally {
         setLoading(false)
+        isFetching = false
       }
     }
     load()
+    return () => controller.abort()
   }, [getCache, setCache])
 
   const sports = useMemo(() => {
@@ -71,7 +77,16 @@ export default function LeaguesPage() {
       </div>
     )
   }
-  if (error) return <div className="py-12 text-center text-red-600">{error}</div>
+  if (error) return (
+    <div className="py-12 text-center">
+      <div role="alert" className="mb-4 text-red-600">{error}</div>
+      <button className="rounded-md border px-3 py-1 text-sm hover:bg-gray-50" onClick={() => {
+        setError('')
+        setLoading(true)
+        setLeagues([])
+      }}>Retry</button>
+    </div>
+  )
 
   return (
     <div className="space-y-6">
