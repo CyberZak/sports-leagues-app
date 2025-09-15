@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { getAllLeagues } from '../services/api'
 import { useCache } from '../context/CacheContext'
 import SearchBar from '../components/SearchBar'
@@ -14,7 +13,6 @@ type League = {
 }
 
 export default function LeaguesPage() {
-  const navigate = useNavigate()
   const { getCache, setCache } = useCache()
   const [leagues, setLeagues] = useState<League[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -58,9 +56,21 @@ export default function LeaguesPage() {
     })
   }, [leagues, query, sport])
 
-  const onClickCard = (id: string) => navigate(`/league/${id}`)
-
-  if (loading) return <div className="py-12 text-center">Loading…</div>
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="h-9 w-full max-w-md animate-pulse rounded-md bg-gray-200/70 dark:bg-gray-700/50" />
+          <div className="h-9 w-40 animate-pulse rounded-md bg-gray-200/70 dark:bg-gray-700/50" />
+        </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="h-28 animate-pulse rounded-xl border border-gray-200/70 bg-white dark:border-gray-800 dark:bg-gray-900" />
+          ))}
+        </div>
+      </div>
+    )
+  }
   if (error) return <div className="py-12 text-center text-red-600">{error}</div>
 
   return (
@@ -69,7 +79,7 @@ export default function LeaguesPage() {
         <SearchBar value={query} onChange={setQuery} placeholder="Search leagues…" />
         <DropdownFilter label="Sport" options={sports} value={sport} onChange={setSport} />
       </div>
-      <LeagueGrid leagues={filtered} onClickCard={onClickCard} />
+      <LeagueGrid leagues={filtered} />
     </div>
   )
 }

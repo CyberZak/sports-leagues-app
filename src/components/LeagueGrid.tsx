@@ -7,13 +7,15 @@ type League = {
   strLeagueAlternate?: string
 }
 
-export default function LeagueGrid({ leagues, onClickCard }: { leagues: League[]; onClickCard: (id: string) => void }) {
+export default function LeagueGrid({ leagues }: { leagues: League[] }) {
   if (!leagues.length) return <div className="py-12 text-center text-gray-500">No results</div>
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {leagues.map((l) => (
-        <LeagueCard key={l.idLeague} league={l} onClick={onClickCard} />
+        <div key={l.idLeague} className="animate-[fadeIn_300ms_ease-out]">
+          <LeagueCard league={l} />
+        </div>
       ))}
     </div>
   )

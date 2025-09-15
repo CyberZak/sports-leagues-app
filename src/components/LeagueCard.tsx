@@ -5,18 +5,22 @@ type League = {
   strLeagueAlternate?: string
 }
 
-export default function LeagueCard({ league, onClick }: { league: League; onClick: (id: string) => void }) {
+export default function LeagueCard({ league }: { league: League }) {
   return (
-    <button
-      onClick={() => onClick(league.idLeague)}
-      className="flex w-full flex-col items-start rounded-lg border border-gray-200 bg-white p-4 text-left shadow-sm transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-   >
-      <div className="text-base font-semibold">{league.strLeague}</div>
-      <div className="mt-1 text-sm text-gray-600">{league.strSport}</div>
+    <a
+      href={`/league/${league.idLeague}`}
+      className="group flex w-full translate-y-0 flex-col items-start rounded-xl border border-gray-200/70 bg-white p-5 text-left shadow-sm ring-1 ring-transparent transition-all hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:border-gray-800 dark:bg-gray-900"
+    >
+      <div className="flex w-full items-center justify-between">
+        <div className="text-base font-semibold tracking-tight">{league.strLeague}</div>
+        <span className="text-xs text-gray-400 transition-opacity group-hover:opacity-0">›</span>
+      </div>
+      <div className="mt-1 text-sm text-gray-600 dark:text-gray-300">{league.strSport}</div>
       {league.strLeagueAlternate ? (
-        <div className="mt-1 text-sm text-gray-500">Alt: {league.strLeagueAlternate}</div>
+        <div className="mt-1 text-xs text-gray-500">Alt: {league.strLeagueAlternate}</div>
       ) : null}
-    </button>
+      <div className="mt-3 h-1 w-0 rounded bg-blue-500 transition-all group-hover:w-full" />
+    </a>
   )
 }
 

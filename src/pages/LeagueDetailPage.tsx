@@ -44,18 +44,26 @@ export default function LeagueDetailPage() {
     load()
   }, [id, getCache, setCache])
 
-  if (loading) return <div className="py-12 text-center">Loading…</div>
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <div className="h-8 w-40 animate-pulse rounded bg-gray-200/70 dark:bg-gray-700/50" />
+        <div className="h-6 w-64 animate-pulse rounded bg-gray-200/70 dark:bg-gray-700/50" />
+        <div className="h-24 w-24 animate-pulse rounded-full bg-gray-200/70 dark:bg-gray-700/50" />
+      </div>
+    )
+  }
   if (error) return <div className="py-12 text-center text-red-600">{error}</div>
   if (!season) return <div className="py-12 text-center">No data</div>
 
   return (
     <div className="space-y-4">
-      <button className="rounded-md border px-3 py-1 text-sm hover:bg-gray-50" onClick={() => navigate(-1)}>
+      <button className="rounded-md border px-3 py-1 text-sm transition hover:-translate-y-0.5 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/50" onClick={() => navigate(-1)}>
         ← Back
       </button>
-      <h1 className="text-2xl font-bold">{season.strLeague || 'League'}</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{season.strLeague || 'League'}</h1>
       {season.strBadge ? (
-        <img src={season.strBadge} alt={`${season.strLeague} badge`} className="h-24 w-24" />
+        <img src={season.strBadge} alt={`${season.strLeague} badge`} className="h-24 w-24 animate-[popIn_250ms_ease-out]" />
       ) : (
         <div className="text-gray-500">No badge available</div>
       )}

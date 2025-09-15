@@ -5,11 +5,6 @@ import LeaguesPage from '../pages/LeaguesPage'
 import * as api from '../services/api'
 
 jest.mock('../services/api')
-const mockedNavigate = jest.fn()
-jest.mock('react-router-dom', () => {
-  const actual = jest.requireActual('react-router-dom')
-  return { ...actual, useNavigate: () => mockedNavigate }
-})
 
 const leaguesMock = {
   leagues: [
@@ -58,12 +53,11 @@ describe('LeaguesPage', () => {
     expect(screen.queryByText('Premier League')).not.toBeInTheDocument()
   })
 
-  it('navigates to detail page on click', async () => {
+  it('link has correct href to detail page', async () => {
     ;(api.getAllLeagues as jest.Mock).mockResolvedValue(leaguesMock)
     renderPage()
-    const button = await screen.findByText('Premier League')
-    fireEvent.click(button)
-    expect(mockedNavigate).toHaveBeenCalledWith('/league/1')
+    const link = await screen.findByRole('link', { name: /Premier League/i })
+    expect((link as HTMLAnchorElement).getAttribute('href')).toBe('/league/1')
   })
 })
 
