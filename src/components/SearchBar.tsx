@@ -10,6 +10,7 @@ export default function SearchBar({ value, onChange, placeholder }: Props) {
       <label htmlFor="league-search" className="sr-only">Search leagues</label>
       <input
         id="league-search"
+        aria-label="Search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
