@@ -1,14 +1,15 @@
 import { createContext, useCallback, useContext, useMemo, useRef } from 'react'
 
-type CacheRecord = Record<string, any>
+type CacheRecord = Record<string, unknown>
 
 type CacheContextValue = {
-  getCache: (key: string) => any
-  setCache: (key: string, value: any) => void
+  getCache: (key: string) => unknown
+  setCache: (key: string, value: unknown) => void
 }
 
 const CacheContext = createContext<CacheContextValue | undefined>(undefined)
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCache() {
   const ctx = useContext(CacheContext)
   if (!ctx) throw new Error('useCache must be used within CacheProvider')
@@ -22,7 +23,7 @@ export function CacheProvider({ children }: { children: React.ReactNode }) {
     return cacheRef.current[key]
   }, [])
 
-  const setCache = useCallback((key: string, value: any) => {
+  const setCache = useCallback((key: string, value: unknown) => {
     cacheRef.current[key] = value
   }, [])
 

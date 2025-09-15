@@ -1,17 +1,14 @@
 import '@testing-library/jest-dom'
 
-// Polyfills for jsdom environment
+// Polyfills for jsdom environment where TextEncoder/TextDecoder may be missing
 import { TextEncoder, TextDecoder } from 'util'
 
-// @ts-ignore
-if (!global.TextEncoder) {
-  // @ts-ignore
-  global.TextEncoder = TextEncoder
+if (typeof (globalThis as unknown as { TextEncoder?: typeof TextEncoder }).TextEncoder === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(globalThis as any).TextEncoder = TextEncoder
 }
-// @ts-ignore
-if (!global.TextDecoder) {
-  // @ts-ignore
-  global.TextDecoder = TextDecoder as unknown as typeof global.TextDecoder
+if (typeof (globalThis as unknown as { TextDecoder?: typeof TextDecoder }).TextDecoder === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(globalThis as any).TextDecoder = TextDecoder as unknown as typeof globalThis.TextDecoder
 }
-
 

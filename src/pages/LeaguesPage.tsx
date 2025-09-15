@@ -30,8 +30,8 @@ export default function LeaguesPage() {
       setError('')
       try {
         const cached = getCache('leagues')
-        if (cached) {
-          setLeagues(cached)
+        if (Array.isArray(cached)) {
+          setLeagues(cached as League[])
         } else {
           const data = await getAllLeagues()
           const list: League[] = data.leagues || []
